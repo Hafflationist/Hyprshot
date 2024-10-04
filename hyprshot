@@ -4,18 +4,18 @@ set -e
 
 function Help() {
     cat <<EOF
-Usage: hyprshot [options ..] [-m [mode] ..] -- [command]
+Nutzung: hyprshot [options ..] [-m [mode] ..] -- [command]
 
-Hyprshot is an utility to easily take screenshot in Hyprland using your mouse.
+Hyprshot ist ein Dienstprogramm, mit dem Sie ganz einfach Bildschirmfotos in Hyprland mit Ihrer Maus machen können.
 
 It allows taking screenshots of windows, regions and monitors which are saved to a folder of your choosing and copied to your clipboard.
 
-Examples:
+Beispiele:
   capture a window                      \`hyprshot -m window\`
   capture active window to clipboard    \`hyprshot -m window -m active --clipboard-only\`
   capture selected monitor              \`hyprshot -m output -m DP-1\`
 
-Options:
+Optionen:
   -h, --help                show help message
   -m, --mode                one of: output, window, region, active, OUTPUT_NAME
   -o, --output-folder       directory in which to save screenshot
@@ -29,7 +29,7 @@ Options:
   --clipboard-only          copy screenshot to clipboard and don't save image in disk
   -- [command]              open screenshot with a command of your choosing. e.g. hyprshot -m window -- mirage
 
-Modes:
+Modi:
   output        take screenshot of an entire monitor
   window        take screenshot of an open window
   region        take screenshot of selected region
@@ -55,9 +55,9 @@ function send_notification() {
     fi
 
     local message=$([ $CLIPBOARD -eq 1 ] && \
-        echo "Image copied to the clipboard" || \
-        echo "Image saved in <i>${1}</i> and copied to the clipboard.")
-    notify-send "Screenshot saved" \
+        echo "Bild in Zwischenablage gespeichert" || \
+        echo "Bild gespeichert in <i>${1}</i> und in die Zwischenablage kopiert.")
+    notify-send "Bildschirmfoto gespeichert" \
                 "${message}" \
                 -t "$NOTIF_TIMEOUT" -i "${1}" -a Hyprshot
 }
@@ -289,7 +289,7 @@ function args() {
     done
 
     if [ -z $OPTION ]; then
-        Print "A mode is required\n\nAvailable modes are:\n\toutput\n\tregion\n\twindow\n"
+        Print "Ein modus wird benötigt\n\nMögliche Auswahl:\n\toutput\n\tregion\n\twindow\n"
         exit 2
     fi
 }
@@ -313,5 +313,5 @@ FILENAME="$(date +'%Y-%m-%d-%H%M%S_hyprshot.png')"
 args $0 "$@"
 
 SAVE_FULLPATH="$SAVEDIR/$FILENAME"
-[ $CLIPBOARD -eq 0 ] && Print "Saving in: %s\n" "$SAVE_FULLPATH"
+[ $CLIPBOARD -eq 0 ] && Print "Wird gespeichert in: %s\n" "$SAVE_FULLPATH"
 begin_grab $OPTION & checkRunning
